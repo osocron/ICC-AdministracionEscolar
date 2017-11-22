@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+.navbar {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
