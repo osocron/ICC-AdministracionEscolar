@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Ciclos, Programas, Cursos} from '../../_models/index';
-import {RemoteAPIService} from '../../_services/index';
+import {RemoteAPIService} from '../../_services/remote-api.service';
 
 @Component({
   selector: 'app-filter-section',
@@ -10,10 +10,12 @@ import {RemoteAPIService} from '../../_services/index';
 })
 export class FilterSectionComponent implements OnInit {
   remote_ciclos: Subject<Ciclos[]>;
+  remote_ciclos_anterior: Subject<Ciclos[]>;
   remote_programas: Subject<Programas[]>;
   remote_cursos: Subject<Cursos[]>;
   selected_programa: Programas;
   selected_ciclo: Ciclos;
+  selected_ciclo_anterior: Ciclos;
   selected_curso: Cursos;
 
   constructor(
@@ -21,6 +23,7 @@ export class FilterSectionComponent implements OnInit {
 
   ngOnInit() {
     this.remote_ciclos = new Subject();
+    this.remote_ciclos_anterior = new Subject();
     this.remote_programas = new Subject();
     this.remote_cursos = new Subject();
   }
@@ -37,8 +40,25 @@ export class FilterSectionComponent implements OnInit {
     }
   }
 
+  onCicloAnteriorComboQuery(query) {
+    if (query) {
+      this.remoteService.searchCiclos(query).subscribe((result) => {
+        this.remote_ciclos_anterior.next(result);
+      });
+    } else {
+      this.remoteService.getCiclos().subscribe((result) => {
+        this.remote_ciclos_anterior.next(result);
+      });
+    }
+  }
+
   onCiclosComboSelect(ciclo: Ciclos) {
     this.selected_ciclo = ciclo;
+    console.log(ciclo);
+  }
+
+  onCicloAnteriorComboSelect(ciclo: Ciclos) {
+    this.selected_ciclo_anterior = ciclo;
     console.log(ciclo);
   }
 
@@ -85,10 +105,6 @@ export class FilterSectionComponent implements OnInit {
   onCursosComboSelect(curso: Cursos) {
     console.log(curso);
     this.selected_curso = curso;
-  }
-
-  onGenerateEstadistica() {
-    // TODO implementar la generacion de estadisticas
   }
 
 }

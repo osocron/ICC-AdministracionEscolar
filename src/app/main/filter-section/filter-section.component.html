@@ -11,6 +11,19 @@
         (onQuery)="onCiclosComboQuery($event)"></combo-box>
     </div>
     <div class="col-lg-6">
+      <label for="ciclos_anterior_cmbo">Ciclo Anterior: {{selected_ciclo_anterior ? selected_ciclo_anterior.periodo : ''}}</label>
+      <combo-box
+        id="ciclos_anterior_cmbo"
+        [remote]="true" [listData]="remote_ciclos_anterior"
+        [displayField]="'periodo'"
+        [clearOnSelect]="true"
+        (onSelect)="onCicloAnteriorComboSelect($event)"
+        (onQuery)="onCicloAnteriorComboQuery($event)"></combo-box>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-6">
       <label for="programas_cmbo">Programa: {{selected_programa ? selected_programa.nombre : ''}}</label>
       <combo-box
         id="programas_cmbo"
@@ -20,9 +33,6 @@
         (onSelect)="onProgramasComboSelect($event)"
         (onQuery)="onProgramasComboQuery($event)"></combo-box>
     </div>
-  </div>
-  <br>
-  <div class="row">
     <div class="col-lg-6">
       <label for="cursos_cmbo">Curso: {{selected_curso ? selected_curso.nombre : ''}}</label>
       <combo-box
@@ -33,19 +43,23 @@
         (onSelect)="onCursosComboSelect($event)"
         (onQuery)="onCursosComboQuery($event)"></combo-box>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6"></div>
     <div class="col-lg-6">
       <input type="button"
              style="margin-top: 25px;"
-             class="btn btn-primary"
+             class="btn btn-primary pull-right btn-block"
              (click)="insight.generateEstadisticas()"
              value="Generar estadísticas">
     </div>
   </div>
-  <div class="row">
-    <hr>
-  </div>
 </div>
+<br>
+<br>
 <app-insights
   [selectedCiclo]="selected_ciclo"
   [selectedPrograma]="selected_programa"
-  [selectedCurso]="selected_curso" #insight></app-insights>
+  [selectedCurso]="selected_curso"
+  [selectedCicloAnterior]="selected_ciclo_anterior"
+  #insight></app-insights>

@@ -13,6 +13,8 @@ import {routing} from './app.routing';
 import {MockBackend} from '@angular/http/testing';
 import {ComboBoxModule} from 'ng2-combobox';
 import {RemoteAPIService} from './_services/remote-api.service';
+import {LoadingModule} from 'ngx-loading';
+import { Formulario911Component } from './main/formulario911/formulario911.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {RemoteAPIService} from './_services/remote-api.service';
     MainComponent,
     FilterSectionComponent,
     InsightsComponent,
-    InsightComponent
+    InsightComponent,
+    Formulario911Component
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import {RemoteAPIService} from './_services/remote-api.service';
     FormsModule,
     HttpModule,
     routing,
-    ComboBoxModule
+    ComboBoxModule,
+    LoadingModule
   ],
   providers: [
     MockBackend,
