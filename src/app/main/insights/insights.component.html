@@ -27,12 +27,18 @@
           <th>Número de cursos aprobados</th>
           <th>Número de cursos reprobados</th>
           <th>Porcentaje de aprobación %</th>
+          <th>
+            <button class="btn btn-success" (click)="descargarDatosAprobacion()">
+              <i class="fa fa-download" aria-hidden="true"></i>
+            </button>
+          </th>
         </tr>
         <tr>
           <td>{{totalAlumnos}}</td>
           <td>{{numeroAprobados}}</td>
           <td>{{numeroReprobados}}</td>
           <td>{{porcentajeAprobacion}}</td>
+          <td></td>
         </tr>
       </table>
     </div>
@@ -46,12 +52,18 @@
           <th>Inscritos en el ciclo anterior</th>
           <th>Número de reinscripciones</th>
           <th>Porcentaje de retención %</th>
+          <th>
+            <button class="btn btn-success" (click)="descargarDatosRetencion()">
+              <i class="fa fa-download" aria-hidden="true"></i>
+            </button>
+          </th>
         </tr>
         <tr>
           <td>{{totalAlumnosCicloActual}}</td>
           <td>{{totalAlumnosCicloAnterior}}</td>
           <td>{{numeroReinscripciones}}</td>
           <td>{{porcentajeRetencion}}</td>
+          <td></td>
         </tr>
       </table>
     </div>

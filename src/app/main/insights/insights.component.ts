@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import {Ciclos, Programas, Cursos, Registro, Resultado} from '../../_models/index';
 import {RemoteAPIService} from '../../_services/remote-api.service';
 import {Observable} from 'rxjs/Observable';
+import * as FileSaver from 'file-saver';
+import {PapaParseService} from 'ngx-papaparse';
 
 @Component({
   selector: 'app-insights',
@@ -23,11 +25,14 @@ export class InsightsComponent implements OnInit {
   totalAlumnosCicloAnterior = 0;
   numeroReinscripciones = 0;
   porcentajeRetencion = '0';
+  dataActual: Registro[] = [];
+  dataCicloPasado: Registro[] = [];
 
   public loading = false;
 
   constructor(
-    private remoteService: RemoteAPIService) { }
+    private remoteService: RemoteAPIService,
+    private papa: PapaParseService) { }
 
   ngOnInit() {
   }
@@ -93,16 +98,17 @@ export class InsightsComponent implements OnInit {
   estadisticaAprobacion(result) {
     if (!result.error) {
       const values: Registro[] = result.value;
+      this.dataActual = values;
       const total = values.length;
       const aprobados = values.reduce((n, resultado) => {
         if (resultado.calif === '-' || resultado.calif === 'BD' ||
           resultado.calif === 'BM' || resultado.calif === 'BT' ||
-          resultado.calif === 'DA' || resultado.calif === 'IN' ||
-          resultado.calif === 'NA' || resultado.calif === 'NO PRESENT' ||
-          resultado.calif === 'NP' || resultado.calif === 'PRESENTÓ E' ||
-          resultado.calif === 'REV' || resultado.calif === 'S/C') {
+          resultado.calif === 'IN' || resultado.calif === 'NA' ||
+          resultado.calif === 'NO PRESENT' || resultado.calif === 'NP' ||
+          resultado.calif === 'PRESENTÓ E' || resultado.calif === 'REV' ||
+          resultado.calif === 'S/C') {
           return n;
-        } else if (resultado.calif === 'A') {
+        } else if (resultado.calif === 'A' || resultado.calif === 'DA') {
           return n + 1;
         } else {
           if (+resultado.calif >= 6) {
@@ -133,16 +139,18 @@ export class InsightsComponent implements OnInit {
   estadisticaRetencionAprobacion(result: Resultado[]) {
     if (!result[0].error && !result[1].error) {
       const valoresActuales: Registro[] = result[0].value;
+      this.dataActual = valoresActuales;
+      this.dataCicloPasado = result[1].value;
       const totalActual = valoresActuales.length;
       const aprobados = valoresActuales.reduce((n, resultado) => {
         if (resultado.calif === '-' || resultado.calif === 'BD' ||
           resultado.calif === 'BM' || resultado.calif === 'BT' ||
-          resultado.calif === 'DA' || resultado.calif === 'IN' ||
-          resultado.calif === 'NA' || resultado.calif === 'NO PRESENT' ||
-          resultado.calif === 'NP' || resultado.calif === 'PRESENTÓ E' ||
-          resultado.calif === 'REV' || resultado.calif === 'S/C') {
+          resultado.calif === 'IN' || resultado.calif === 'NA' ||
+          resultado.calif === 'NO PRESENT' || resultado.calif === 'NP' ||
+          resultado.calif === 'PRESENTÓ E' || resultado.calif === 'REV' ||
+          resultado.calif === 'S/C') {
           return n;
-        } else if (resultado.calif === 'A') {
+        } else if (resultado.calif === 'A' || resultado.calif === 'DA') {
           return n + 1;
         } else {
           if (+resultado.calif >= 6) {
@@ -206,4 +214,15 @@ export class InsightsComponent implements OnInit {
     }, {});
   }
 
+  descargarDatosAprobacion() {
+    const parsedData = this.papa.unparse(this.dataActual);
+    const blob = new Blob([parsedData], {type: 'text/csv;charset=utf-8'});
+    FileSaver.saveAs(blob, 'DatosDeAprobacion.csv');
+  }
+
+  descargarDatosRetencion() {
+    const parsedData = this.papa.unparse(this.dataActual.concat(this.dataCicloPasado));
+    const blob = new Blob([parsedData], {type: 'text/csv;charset=utf-8'});
+    FileSaver.saveAs(blob, 'DatosDeRetencion.csv');
+  }
 }

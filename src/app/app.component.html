@@ -4,17 +4,9 @@
       <a href="#" class="navbar-brand">Instituto Consorcio Clavijero</a>
     </div>
     <div class="nav navbar-nav">
-      <li class="active"><a routerLink="/">Estadísticas</a></li>
-      <li><a routerLink="/911">Formulario 911</a></li>
+      <li [ngClass]="{ 'active' : estadisticasClicked }" (click)="onEstadisticasClicked()"><a routerLink="/">Estadísticas</a></li>
+      <li [ngClass]="{ 'active' : formulariosClicked }" (click)="onFormularioClicked()"><a routerLink="/911">Formulario 911.9A</a></li>
     </div>
   </div>
 </nav>
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="text-center">{{title}}</h1>
-    </div>
-  </div>
-  <hr>
-</div>
 <router-outlet></router-outlet>

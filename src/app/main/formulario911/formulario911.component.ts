@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./formulario911.component.css']
 })
 export class Formulario911Component implements OnInit {
+  title = 'Formulario 911.9A';
 
   constructor() { }
 

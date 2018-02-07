@@ -12,9 +12,10 @@ import {BaseRequestOptions, HttpModule} from '@angular/http';
 import {routing} from './app.routing';
 import {MockBackend} from '@angular/http/testing';
 import {ComboBoxModule} from 'ng2-combobox';
-import {RemoteAPIService} from './_services/remote-api.service';
 import {LoadingModule} from 'ngx-loading';
 import { Formulario911Component } from './main/formulario911/formulario911.component';
+import {RemoteAPIService} from './_services';
+import {PapaParseModule} from 'ngx-papaparse';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { Formulario911Component } from './main/formulario911/formulario911.compo
     HttpModule,
     routing,
     ComboBoxModule,
-    LoadingModule
+    LoadingModule,
+    PapaParseModule
   ],
   providers: [
     MockBackend,

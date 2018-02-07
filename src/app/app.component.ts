@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Consulta de progreso y retención escolar';
+  estadisticasClicked = true;
+  formulariosClicked = false;
+
+  onEstadisticasClicked() {
+    this.estadisticasClicked = true;
+    this.formulariosClicked = false;
+  }
+
+  onFormularioClicked() {
+    this.formulariosClicked = true;
+    this.estadisticasClicked = false;
+  }
 }

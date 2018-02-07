@@ -10,7 +10,7 @@ import {Ciclos, Programas, Cursos, Resultado} from '../_models/index';
 
 @Injectable()
 export class RemoteAPIService {
-  base_url = 'http://localhost:9000/';
+  base_url = 'http://10.200.3.210:9000/';
 
   constructor(private http: Http) {
   }

@@ -9,6 +9,7 @@ import {RemoteAPIService} from '../../_services/remote-api.service';
   styleUrls: ['./filter-section.component.css']
 })
 export class FilterSectionComponent implements OnInit {
+  title = 'Consulta de progreso y retención escolar';
   remote_ciclos: Subject<Ciclos[]>;
   remote_ciclos_anterior: Subject<Ciclos[]>;
   remote_programas: Subject<Programas[]>;
